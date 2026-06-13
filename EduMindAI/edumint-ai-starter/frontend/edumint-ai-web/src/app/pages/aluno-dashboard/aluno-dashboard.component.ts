@@ -23,10 +23,11 @@ export class AlunoDashboardComponent implements OnInit {
     { key: 'diagnostico', label: 'Diagnóstico', route: '/aluno/diagnostico', icon: 'DG' },
     { key: 'trilhas', label: 'Trilhas', route: '/aluno/trilha', icon: 'TR' },
     { key: 'missoes', label: 'Missões', route: '/aluno/quest/missao', icon: 'MS' },
-    { key: 'conquistas', label: 'Conquistas', route: '/aluno/quest/missao', icon: 'CQ' },
-    { key: 'relatorios', label: 'Relatórios', route: '/aluno/dashboard', icon: 'RL' },
-    { key: 'ranking', label: 'Ranking', route: '/aluno/quest/missao', icon: 'RK' },
-    { key: 'configuracoes', label: 'Configurações', route: '/aluno/dashboard', icon: 'CF' }
+    { key: 'conquistas', label: 'Conquistas', route: '/aluno/conquistas', icon: 'CQ' },
+    { key: 'relatorios', label: 'Relatórios', route: '/aluno/relatorios', icon: 'RL' },
+    { key: 'biblioteca', label: 'Biblioteca', route: '/aluno/biblioteca', icon: 'BB' },
+    { key: 'tutor', label: 'IA Tutor', route: '/aluno/tutor', icon: 'AI' },
+    { key: 'desafios', label: 'Desafios diários', route: '/aluno/desafios', icon: 'DD' }
   ];
 
   dashboard: DashboardAluno = alunoDashboardMock;
