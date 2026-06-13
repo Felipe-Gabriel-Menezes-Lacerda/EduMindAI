@@ -1,0 +1,48 @@
+<app-layout [items]="menuItems" activeKey="trilhas" sidebarTone="light" topbarTone="light" userName="Ana Souza" userRole="Aluno" initials="AS" footerTitle="Minty recomenda" footerSubtitle="Pratique um passo por vez para consolidar a aprendizagem" footerIcon="TR">
+  <div class="app-page">
+    <section class="trilha-hero surface">
+      <div>
+        <span class="kicker">Trilha personalizada</span>
+        <h1>{{ trilha.titulo }}</h1>
+        <p>Gerada a partir do seu diagnóstico. Foque nas habilidades críticas e avance com microvitórias até desbloquear a missão final.</p>
+      </div>
+      <div class="hero-status">
+        <strong>{{ resultado.status }}</strong>
+        <span>{{ resultado.habilidadesCriticas.join(' • ') }}</span>
+        <app-progress-bar [value]="35"></app-progress-bar>
+        <small>35% concluído</small>
+      </div>
+    </section>
+
+    <div class="trilha-grid">
+      <app-card title="Plano de recomposição" subtitle="Siga a ordem das atividades para fortalecer a base antes da validação final.">
+        <div class="activities">
+          <article class="activity" *ngFor="let atividade of trilha.atividades; let index = index" [class.active]="index === 2">
+            <div class="order">{{ atividade.ordem }}</div>
+            <div>
+              <h3>{{ atividade.titulo }}</h3>
+              <p>{{ atividade.descricao }}</p>
+            </div>
+            <app-badge [text]="index < 2 ? 'Concluído' : index === 2 ? 'Em andamento' : 'Próximo passo'" [tone]="index < 2 ? 'success' : index === 2 ? 'info' : 'warn'"></app-badge>
+          </article>
+        </div>
+      </app-card>
+
+      <div class="side-stack">
+        <app-card title="Resumo do diagnóstico" [compact]="true">
+          <strong class="score">{{ resultado.desempenhoGeral }}%</strong>
+          <p>{{ resultado.feedback }}</p>
+          <div class="chip-list"><span *ngFor="let habilidade of resultado.habilidadesCriticas">{{ habilidade }}</span></div>
+        </app-card>
+
+        <app-card title="Tutor IA" [compact]="true">
+          <div class="tip-card">
+            <div class="minty">AI</div>
+            <p>Comece pelos exemplos guiados e depois resolva desafios curtos. Isso ajuda a fixar o raciocínio antes do quiz final.</p>
+          </div>
+          <button type="button" class="btn-secondary">Pedir nova dica</button>
+        </app-card>
+      </div>
+    </div>
+  </div>
+</app-layout>

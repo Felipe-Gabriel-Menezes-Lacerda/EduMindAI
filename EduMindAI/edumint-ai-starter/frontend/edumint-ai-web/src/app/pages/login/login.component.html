@@ -1,0 +1,75 @@
+<div class="login-page">
+  <header class="top-strip">
+    <div class="brand-group">
+      <div class="brand-mark">EM</div>
+      <strong>EduMint AI</strong>
+      <span>Cada aluno aprende no seu ritmo</span>
+    </div>
+    <a class="support-link" href="javascript:void(0)">Precisa de ajuda?</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="hero-text">
+        <h1>Aprendizagem inteligente <span>para cada aluno crescer</span></h1>
+        <p>O EduMint AI combina diagnóstico, trilhas personalizadas e gamificação para transformar o aprendizado do Ensino Fundamental.</p>
+      </div>
+
+      <div class="benefits-list">
+        <article class="benefit" *ngFor="let beneficio of beneficios">
+          <div class="benefit-icon">{{ beneficio.sigla }}</div>
+          <div>
+            <strong>{{ beneficio.titulo }}</strong>
+            <p>{{ beneficio.descricao }}</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="hero-illustration surface">
+        <div class="halo"></div>
+        <div class="floating-card analytics-card">
+          <div class="mini-chart"><span></span><span></span><span></span><span></span></div>
+          <strong>Diagnóstico em tempo real</strong>
+        </div>
+        <div class="floating-card badge-card">Missões + pontos + conquistas</div>
+        <div class="students-scene"><div class="student student-left"></div><div class="student student-right"></div><div class="desk"></div></div>
+      </div>
+
+      <div class="highlights surface">
+        <div><strong>+20 mil</strong><span>Alunos impactados</span></div>
+        <div><strong>+500</strong><span>Escolas parceiras</span></div>
+        <div><strong>+95%</strong><span>Taxa de engajamento</span></div>
+      </div>
+    </div>
+
+    <section class="login-card surface">
+      <div class="login-avatar">AC</div>
+      <div class="login-heading">
+        <h2>Acesse sua conta</h2>
+        <p>Entre para continuar sua jornada</p>
+      </div>
+
+      <div class="perfil-switch">
+        <button type="button" [class.active]="perfil === 'aluno'" (click)="perfil = 'aluno'">Aluno</button>
+        <button type="button" [class.active]="perfil === 'professor'" (click)="perfil = 'professor'">Professor</button>
+      </div>
+
+      <div class="form-field">
+        <label for="email">E-mail</label>
+        <input id="email" class="form-control" [(ngModel)]="email" placeholder="seu@email.com" />
+      </div>
+
+      <div class="form-field">
+        <label for="senha">Senha</label>
+        <input id="senha" class="form-control" [(ngModel)]="senha" type="password" placeholder="••••••••" />
+      </div>
+
+      <a class="forgot" href="javascript:void(0)">Esqueceu sua senha?</a>
+      <button type="button" class="btn-primary" (click)="entrar()">Entrar</button>
+      <div class="separator"><span>ou</span></div>
+      <button type="button" class="btn-secondary" (click)="iniciarDiagnostico()">Começar diagnóstico</button>
+
+      <p class="terms">Ao continuar, você concorda com nossos <a class="link-inline" href="javascript:void(0)">Termos de Uso</a> e <a class="link-inline" href="javascript:void(0)">Política de Privacidade</a>.</p>
+    </section>
+  </section>
+</div>

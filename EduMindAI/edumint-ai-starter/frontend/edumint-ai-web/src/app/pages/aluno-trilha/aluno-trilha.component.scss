@@ -1,0 +1,17 @@
+.trilha-hero { padding: 28px; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: center; }
+.trilha-hero h1 { font-size: clamp(2.1rem, 3vw, 3.2rem); margin: 10px 0; }
+.trilha-hero p { color: var(--text-700); line-height: 1.55; max-width: 760px; }
+.hero-status { display: grid; gap: 12px; padding: 20px; border-radius: 20px; background: linear-gradient(180deg, #ffffff 0%, #eefaf4 100%); border: 1px solid #dcefe6; }
+.hero-status strong { font-size: 1.5rem; } .hero-status span, .hero-status small { color: var(--text-500); }
+.trilha-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; }
+.activities, .side-stack { display: grid; gap: 16px; }
+.activity { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 18px; border-radius: 18px; border: 1px solid var(--line); }
+.activity.active { border-color: rgba(14,168,111,0.45); background: #f5fcf8; }
+.order { width: 52px; height: 52px; border-radius: 18px; display: grid; place-items: center; background: var(--mint-100); color: var(--mint-600); font-weight: 900; }
+.activity p, .tip-card p { color: var(--text-500); line-height: 1.5; }
+.score { font-size: 2.6rem; }
+.chip-list { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip-list span { padding: 8px 12px; border-radius: 999px; background: #eefaf4; color: var(--mint-600); font-weight: 700; }
+.tip-card { display: grid; gap: 14px; }
+.minty { width: 66px; height: 66px; border-radius: 22px; display: grid; place-items: center; background: linear-gradient(135deg, #e8e8ff, #dcfff3); color: #6d56f0; font-weight: 900; }
+@media (max-width: 1050px) { .trilha-hero, .trilha-grid { grid-template-columns: 1fr; } .activity { grid-template-columns: 52px 1fr; } }

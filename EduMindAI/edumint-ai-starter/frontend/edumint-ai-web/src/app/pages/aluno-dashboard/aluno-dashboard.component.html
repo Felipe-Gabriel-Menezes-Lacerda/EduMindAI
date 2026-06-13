@@ -1,0 +1,54 @@
+<app-layout [items]="menuItems" activeKey="inicio" sidebarTone="light" topbarTone="light" userName="Ana Souza" userRole="Aluno" initials="AS" footerTitle="Convidar amigos" footerSubtitle="Ganhe pontos extras com sua turma" footerIcon="XP">
+  <div class="app-page">
+    <section class="hero-row"><div><h1>{{ dashboard.saudacao }}</h1><p>{{ dashboard.resumo }}</p></div></section>
+
+    <section class="stats-grid">
+      <app-stat-card *ngFor="let stat of dashboard.stats" [title]="stat.titulo" [value]="stat.valor" [detail]="stat.detalhe" [icon]="stat.icone" [tone]="stat.tonalidade" [progress]="stat.progresso"></app-stat-card>
+    </section>
+
+    <div class="content-grid">
+      <div class="main-column">
+        <app-card title="Resultado do diagnóstico" subtitle="Veja como você foi em cada habilidade avaliada e onde focar para evoluir ainda mais." badge="Concluído em 24/05/2024">
+          <div class="skill-grid">
+            <article class="skill-card" *ngFor="let item of dashboard.diagnostico" [class.alerta]="item.percentual < 50">
+              <div class="skill-head"><div class="icon-bubble">{{ item.icone }}</div><div><h3>{{ item.titulo }}</h3><strong>{{ item.percentual }}%</strong></div></div>
+              <app-badge [text]="item.status" [tone]="item.percentual < 50 ? 'warn' : 'success'"></app-badge>
+              <app-progress-bar [value]="item.percentual" [tone]="toneForSkill(item.percentual)"></app-progress-bar>
+              <p>{{ item.descricao }}</p>
+            </article>
+          </div>
+          <a class="link-inline" routerLink="/aluno/diagnostico">Ver relatório completo</a>
+        </app-card>
+
+        <app-card title="Sua trilha personalizada" subtitle="Siga os passos da sua trilha para fortalecer suas habilidades e subir de nível.">
+          <div class="trail-grid">
+            <article class="trail-step" *ngFor="let etapa of dashboard.trilha" [class.current]="etapa.status === 'atual'" [class.locked]="etapa.status === 'bloqueado'">
+              <div class="step-index">{{ etapa.ordem }}</div>
+              <strong>{{ etapa.titulo }}</strong>
+              <p>{{ etapa.descricao }}</p>
+              <button *ngIf="etapa.acao" type="button" class="btn-primary" routerLink="/aluno/trilha">{{ etapa.acao }}</button>
+              <span *ngIf="!etapa.acao">{{ etapa.status === 'concluido' ? 'Concluído' : 'Bloqueado' }}</span>
+            </article>
+          </div>
+        </app-card>
+      </div>
+
+      <div class="side-column">
+        <app-card title="Seu tutor de IA" [compact]="true">
+          <div class="mentor-card"><div class="mentor-robot">AI</div><div><strong>{{ dashboard.tutor.saudacao }}</strong><p>{{ dashboard.tutor.mensagem }}</p></div></div>
+          <button type="button" class="btn-secondary">{{ dashboard.tutor.acao }}</button>
+        </app-card>
+
+        <app-card title="Próxima missão" [compact]="true">
+          <div class="next-mission">
+            <strong>{{ dashboard.proximaMissao.titulo }}</strong>
+            <p>{{ dashboard.proximaMissao.descricao }}</p>
+            <app-progress-bar [value]="(dashboard.proximaMissao.progresso / dashboard.proximaMissao.totalEtapas) * 100"></app-progress-bar>
+            <div class="mission-meta"><span>{{ dashboard.proximaMissao.progresso }} / {{ dashboard.proximaMissao.totalEtapas }}</span><span>{{ dashboard.proximaMissao.recompensa }}</span></div>
+            <a class="btn-primary" routerLink="/aluno/quest/missao">{{ dashboard.proximaMissao.acao }}</a>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+</app-layout>

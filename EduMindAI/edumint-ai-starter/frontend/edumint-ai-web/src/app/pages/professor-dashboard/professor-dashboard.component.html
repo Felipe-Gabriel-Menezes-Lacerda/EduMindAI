@@ -1,0 +1,65 @@
+<app-layout [items]="menuItems" activeKey="visao-geral" sidebarTone="light" topbarTone="dark" userName="Prof. Ana Clara" userRole="Professora" initials="AC" footerTitle="Dica da IA" footerSubtitle="Use diagnósticos frequentes para acompanhar o progresso contínuo da sua turma" footerIcon="AI">
+  <div class="app-page">
+    <section class="head-row">
+      <div>
+        <h1>{{ dashboard.turma }}</h1>
+        <p>{{ dashboard.totalAlunos }} alunos • Ensino Fundamental • Matemática</p>
+      </div>
+      <div class="actions"><button type="button" class="btn-ghost">Exportar relatório</button><button type="button" class="btn-primary">Novo diagnóstico</button></div>
+    </section>
+
+    <section class="stats-grid">
+      <app-stat-card title="Alunos avaliados" [value]="dashboard.alunosAvaliados + ' / ' + dashboard.totalAlunos" detail="92% da turma" icon="AL"></app-stat-card>
+      <app-stat-card title="Média da turma" [value]="dashboard.mediaTurma + '%'" detail="+6 p.p. desde o último diagnóstico" icon="MD" tone="purple"></app-stat-card>
+      <app-stat-card title="Alunos em atenção" [value]="dashboard.alunosEmAtencao + ''" detail="Precisam de apoio prioritário" icon="AT" tone="amber"></app-stat-card>
+      <app-stat-card title="Alunos avançados" [value]="dashboard.alunosAvancados + ''" detail="Acima da média da turma" icon="AV" tone="mint"></app-stat-card>
+    </section>
+
+    <div class="dashboard-grid">
+      <app-card title="Mapa de defasagem" subtitle="Percentual de acerto por habilidade">
+        <div class="bar-list">
+          <div class="bar-row" *ngFor="let item of dashboard.mapaDefasagem | keyvalue">
+            <span>{{ item.key }}</span>
+            <app-progress-bar [value]="item.value" [tone]="toneForValue(item.value)"></app-progress-bar>
+            <strong>{{ item.value }}%</strong>
+          </div>
+        </div>
+      </app-card>
+
+      <app-card title="Evolução da turma" subtitle="Média de desempenho (%)">
+        <div class="chart-card">
+          <div class="chart-bars">
+            <div class="bar-point" *ngFor="let ponto of dashboard.evolucaoTurma"><span [style.height.%]="ponto.valor"></span><strong>{{ ponto.valor }}%</strong><small>{{ ponto.rotulo }}</small></div>
+          </div>
+          <app-badge text="+20 p.p. de evolução desde o primeiro diagnóstico" tone="success"></app-badge>
+        </div>
+      </app-card>
+
+      <app-card title="Sugestão pedagógica" subtitle="Recomendações geradas com base no diagnóstico da turma" badge="IA" [badgeTone]="'info'">
+        <div class="pedagogic-focus">
+          <span class="field-label">Foco principal</span>
+          <strong>{{ dashboard.focoPrincipal }}</strong>
+          <p>{{ dashboard.sugestaoPedagogica }}</p>
+        </div>
+        <ul class="action-list"><li *ngFor="let acao of dashboard.acoesSugeridas">{{ acao }}</li></ul>
+        <button type="button" class="btn-secondary">Ver plano completo</button>
+      </app-card>
+
+      <app-card title="Alunos que precisam de apoio" subtitle="Priorize quem apresenta maior defasagem" class="support-card">
+        <div class="students-table">
+          <div class="table-row table-head"><span>Aluno</span><span>Média</span><span>Dificuldades</span><span>Último diagnóstico</span></div>
+          <div class="table-row" *ngFor="let aluno of dashboard.alunosQuePrecisamDeApoio">
+            <strong>{{ aluno.nome }}</strong>
+            <span class="score">{{ aluno.mediaGeral }}%</span>
+            <span>{{ aluno.principaisDificuldades.join(', ') }}</span>
+            <span>{{ aluno.ultimoDiagnostico }}</span>
+          </div>
+        </div>
+      </app-card>
+
+      <app-card title="Próximos passos" [compact]="true">
+        <div class="next-steps"><div *ngFor="let passo of dashboard.proximosPassos"><strong>{{ passo.titulo }}</strong><span>{{ passo.data }}</span></div></div>
+      </app-card>
+    </div>
+  </div>
+</app-layout>

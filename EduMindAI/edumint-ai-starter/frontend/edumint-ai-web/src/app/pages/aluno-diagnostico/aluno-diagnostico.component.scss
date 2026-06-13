@@ -1,0 +1,22 @@
+.hero-panel { padding: 28px; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; align-items: center; }
+.hero-panel h1 { font-size: clamp(2.2rem, 3vw, 3.4rem); margin: 10px 0; }
+.hero-panel p { color: var(--text-700); max-width: 700px; line-height: 1.6; }
+.hero-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.hero-summary div { padding: 18px; border-radius: 18px; background: linear-gradient(180deg, #ffffff 0%, #eefaf4 100%); border: 1px solid #dcefe6; display: grid; gap: 8px; text-align: center; }
+.hero-summary strong { font-size: 1.6rem; }
+.hero-summary span { color: var(--text-500); }
+.diagnostic-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 360px; gap: 22px; }
+.questions-column, .result-column { display: grid; gap: 20px; align-content: start; }
+.question-text { color: var(--text-700); line-height: 1.55; }
+.answers-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.answer-option { border-radius: 16px; padding: 16px; border: 1px solid var(--line); background: #fff; display: flex; align-items: center; gap: 12px; text-align: left; cursor: pointer; }
+.answer-option span { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: #f4f8fc; color: var(--mint-600); font-weight: 900; }
+.answer-option.selected { border-color: rgba(14,168,111,0.45); box-shadow: 0 0 0 4px rgba(14,168,111,0.08); background: #f3fcf7; }
+.submit-button { width: 100%; }
+.result-score { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.result-score strong { font-size: 3rem; }
+.result-section { display: grid; gap: 8px; }
+.result-section p { color: var(--text-500); line-height: 1.5; }
+.chip-list { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip-list span { padding: 8px 12px; border-radius: 999px; background: #eefaf4; color: var(--mint-600); font-weight: 700; }
+@media (max-width: 1050px) { .hero-panel, .diagnostic-grid, .hero-summary, .answers-grid { grid-template-columns: 1fr; } }

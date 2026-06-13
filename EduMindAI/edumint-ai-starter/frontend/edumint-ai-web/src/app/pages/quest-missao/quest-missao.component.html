@@ -1,0 +1,52 @@
+<app-layout [items]="menuItems" activeKey="quest" sidebarTone="dark" topbarTone="dark" userName="Lucas Silva" userRole="Aluno" initials="LS" footerTitle="Nível 5" footerSubtitle="350 / 600 XP" footerNote="Próxima recompensa: 1500 XP" footerIcon="XP">
+  <div class="app-page">
+    <section class="mission-hero surface">
+      <div class="hero-copy">
+        <span class="kicker">{{ missao.subtitulo }}</span>
+        <h1>{{ missao.titulo }}</h1>
+        <p>{{ missao.narrativa }}</p>
+        <div class="hero-stats"><div><strong>{{ missao.pontosAtuais }}</strong><span>Pontos atuais</span></div><div><strong>{{ missao.sequenciaDias }}</strong><span>Sequência</span></div></div>
+        <div class="mission-progress"><div><span>Progresso da missão</span><app-progress-bar [value]="missao.progresso"></app-progress-bar></div><strong>{{ missao.faseAtual }}</strong><span>{{ missao.tempoRestante }}</span></div>
+      </div>
+      <div class="hero-scene"><div class="hero-student left"></div><div class="hero-student right"></div><div class="hero-bot">AI</div></div>
+    </section>
+
+    <div class="mission-grid">
+      <div class="main-column">
+        <app-card [title]="'Desafio ' + missao.desafioAtual.indice + ' de ' + missao.desafioAtual.total" [subtitle]="'+' + missao.desafioAtual.pontos + ' pontos'">
+          <h2>{{ missao.desafioAtual.pergunta }}</h2>
+          <div class="question-board">
+            <div class="fraction-figure"><div class="pie"></div></div>
+            <div class="answers">
+              <button type="button" *ngFor="let alternativa of missao.desafioAtual.alternativas" [class.selected]="alternativaSelecionada === alternativa.id" (click)="alternativaSelecionada = alternativa.id"><span>{{ alternativa.rotulo }}</span><strong>{{ alternativa.texto }}</strong></button>
+            </div>
+          </div>
+          <div class="tip-box"><strong>Dica do Minty</strong><p>{{ missao.desafioAtual.dica }}</p></div>
+          <button type="button" class="btn-primary" (click)="responder()">Responder</button>
+          <p class="feedback" *ngIf="feedback">{{ feedback }}</p>
+        </app-card>
+
+        <app-card title="Baú do Conhecimento" [compact]="true">
+          <app-progress-bar [value]="missao.baudeConhecimento"></app-progress-bar>
+          <p class="muted">Acerte mais desafios para desbloquear novas recompensas e cartas de conhecimento.</p>
+        </app-card>
+      </div>
+
+      <div class="side-column">
+        <app-card title="Ranking" [compact]="true">
+          <div class="ranking-list"><div *ngFor="let item of missao.ranking"><strong>{{ item.posicao }}. {{ item.nome }}</strong><span>{{ item.pontos }} pts</span></div></div>
+        </app-card>
+
+        <app-card title="Sua equipe" [compact]="true">
+          <strong>{{ missao.equipe.nome }}</strong>
+          <p class="muted">{{ missao.equipe.posicao }}º lugar • {{ missao.equipe.pontos }} pontos</p>
+          <div class="avatars"><span *ngFor="let membro of missao.equipe.membros">{{ membro }}</span></div>
+        </app-card>
+
+        <app-card title="Medalhas" [compact]="true">
+          <div class="medals"><div *ngFor="let medalha of missao.medalhas"><strong>{{ medalha.titulo }}</strong><span>{{ medalha.descricao }}</span></div></div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+</app-layout>

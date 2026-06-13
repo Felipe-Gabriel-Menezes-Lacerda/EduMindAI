@@ -1,0 +1,37 @@
+<app-layout [items]="menuItems" activeKey="quest" sidebarTone="dark" topbarTone="dark" userName="Prof. Lucas Almeida" userRole="Professor" initials="LA" [showMenu]="true" footerTitle="9º Ano A" footerSubtitle="24 alunos" footerIcon="TM">
+  <div class="app-page">
+    <section class="breadcrumb">Gincanas com IA <span>></span> Criar gincana</section>
+    <section class="title-block"><h1>EduMint Quest - Criar Gincana</h1><p>Use o poder da IA para criar experiências de aprendizagem gamificadas e inesquecíveis.</p></section>
+
+    <div class="quest-grid">
+      <app-card title="Criar gincana com IA" subtitle="Preencha os campos abaixo e deixe a IA criar uma gincana incrível para sua turma.">
+        <div class="form-grid">
+          <div class="form-field"><label>Turma</label><select class="form-control" [(ngModel)]="form.turmaId"><option value="9A">9º Ano A</option><option value="6A">6º Ano A</option></select></div>
+          <div class="form-field"><label>Disciplina</label><select class="form-control" [(ngModel)]="form.disciplina"><option value="História">História</option><option value="Matemática">Matemática</option></select></div>
+          <div class="form-field"><label>Conteúdo</label><input class="form-control" [(ngModel)]="form.conteudo" /></div>
+          <div class="form-field"><label>Habilidade</label><input class="form-control" [(ngModel)]="form.habilidade" /></div>
+        </div>
+
+        <div class="theme-row"><span class="field-label">Tema da narrativa</span><div class="theme-options"><button type="button" [class.active]="form.tema === 'Anime aventura'" (click)="form.tema = 'Anime aventura'">Anime</button><button type="button" [class.active]="form.tema === 'Detetive'" (click)="form.tema = 'Detetive'">Detetive</button><button type="button" [class.active]="form.tema === 'Super-heróis'" (click)="form.tema = 'Super-heróis'">Super-heróis</button></div></div>
+
+        <div class="inline-grid">
+          <button type="button" [class.active]="form.formato === 'individual'" (click)="form.formato = 'individual'">Individual</button>
+          <button type="button" [class.active]="form.formato === 'equipes'" (click)="form.formato = 'equipes'">Equipes</button>
+          <select class="form-control" [(ngModel)]="form.duracaoDias"><option [ngValue]="3">3 dias</option><option [ngValue]="7">7 dias</option><option [ngValue]="10">10 dias</option></select>
+        </div>
+
+        <div class="form-actions"><button type="button" class="btn-primary" (click)="gerarPreview()">Gerar com IA</button><button type="button" class="btn-secondary" (click)="publicar()">Publicar gincana</button></div>
+        <p class="publish-message" *ngIf="publicacaoMensagem">{{ publicacaoMensagem }}</p>
+      </app-card>
+
+      <app-card [title]="preview.gincana.titulo" subtitle="Prévia da gincana gerada pela IA" badge="Prévia gerada" [badgeTone]="'success'">
+        <section class="preview-hero"><div><p>{{ preview.gincana.narrativa }}</p></div><div class="castle"></div></section>
+        <div class="preview-layout">
+          <div class="missions"><h3>Missões</h3><article class="mission-row" *ngFor="let missao of preview.gincana.missoes"><div class="order">{{ missao.ordem }}</div><div><strong>{{ missao.titulo }}</strong><p>{{ missao.descricao }}</p></div><span>{{ missao.pontos }} pts</span></article></div>
+          <aside class="prize-panel"><div class="points-box"><span>Pontuação total</span><strong>{{ preview.pontuacaoTotal }}</strong><small>pontos</small></div><div class="prizes"><div *ngFor="let premio of preview.gincana.premios"><strong>{{ premio.posicao }}</strong><span>{{ premio.descricao }}</span></div></div></aside>
+        </div>
+        <app-badge [text]="preview.avisoRevisao" tone="info"></app-badge>
+      </app-card>
+    </div>
+  </div>
+</app-layout>

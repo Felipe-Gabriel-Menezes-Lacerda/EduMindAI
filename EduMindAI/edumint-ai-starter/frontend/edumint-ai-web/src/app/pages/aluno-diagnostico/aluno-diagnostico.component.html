@@ -1,0 +1,32 @@
+<app-layout [items]="menuItems" activeKey="diagnostico" sidebarTone="light" topbarTone="light" userName="Ana Souza" userRole="Aluno" initials="AS" footerTitle="Desafio rápido" footerSubtitle="Conclua o diagnóstico e libere sua trilha" footerIcon="DG">
+  <div class="app-page">
+    <section class="hero-panel surface">
+      <div><span class="kicker">Diagnóstico inteligente</span><h1>Descubra onde você precisa de mais apoio</h1><p>Responda às questões abaixo para gerar uma trilha personalizada de recomposição e liberar novas missões.</p></div>
+      <div class="hero-summary"><div><strong>3</strong><span>questões-chave</span></div><div><strong>5 min</strong><span>tempo estimado</span></div><div><strong>IA</strong><span>feedback imediato</span></div></div>
+    </section>
+
+    <div class="diagnostic-grid">
+      <div class="questions-column">
+        <app-card *ngFor="let questao of questoes; let index = index" [title]="'Questão ' + (index + 1)" [subtitle]="questao.habilidade">
+          <p class="question-text">{{ questao.enunciado }}</p>
+          <div class="answers-grid">
+            <button *ngFor="let alternativa of questao.alternativas" type="button" class="answer-option" [class.selected]="respostas[questao.id] === alternativa.letra" (click)="selecionarResposta(questao.id, alternativa.letra)"><span>{{ alternativa.letra }}</span><strong>{{ alternativa.texto }}</strong></button>
+          </div>
+        </app-card>
+        <button type="button" class="btn-primary submit-button" [disabled]="enviando" (click)="enviar()">{{ enviando ? 'Gerando resultado...' : 'Finalizar diagnóstico' }}</button>
+      </div>
+
+      <div class="result-column">
+        <app-card *ngIf="resultado" title="Seu resultado" subtitle="A IA organizou um resumo das suas necessidades de aprendizagem." badge="MVP demonstrável">
+          <div class="result-score"><strong>{{ resultado.desempenhoGeral }}%</strong><app-badge [text]="resultado.status" [tone]="resultado.desempenhoGeral < 50 ? 'warn' : 'success'"></app-badge></div>
+          <app-progress-bar [value]="resultado.desempenhoGeral" [tone]="resultado.desempenhoGeral < 50 ? 'red' : 'mint'"></app-progress-bar>
+          <div class="result-section"><span class="field-label">Habilidades críticas</span><div class="chip-list"><span *ngFor="let habilidade of resultado.habilidadesCriticas">{{ habilidade }}</span></div></div>
+          <div class="result-section"><span class="field-label">Tipo de erro predominante</span><p>{{ resultado.tipoErroPredominante }}</p></div>
+          <div class="result-section"><span class="field-label">Feedback</span><p>{{ resultado.feedback }}</p></div>
+          <button type="button" class="btn-primary" (click)="continuarTrilha()">Gerar minha trilha</button>
+        </app-card>
+        <app-empty-state *ngIf="!resultado" icon="AI" title="Seu resultado aparece aqui" description="Assim que você concluir o diagnóstico, mostramos o percentual de desempenho, os principais erros e o melhor próximo passo."></app-empty-state>
+      </div>
+    </div>
+  </div>
+</app-layout>

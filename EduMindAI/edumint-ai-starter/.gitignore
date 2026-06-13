@@ -1,0 +1,22 @@
+# Node
+node_modules/
+dist/
+.angular/
+
+# .NET
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# Secrets
+appsettings.Development.json
+firebase-service-account.json
+*.p12
+*.pem
+.env
+
+# OS
+.DS_Store
+Thumbs.db

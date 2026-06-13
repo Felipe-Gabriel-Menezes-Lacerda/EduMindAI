@@ -1,0 +1,24 @@
+h1 { font-size: clamp(2.2rem, 3vw, 3.5rem); margin-bottom: 8px; }
+.hero-row p { color: var(--text-700); font-size: 1.05rem; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.content-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; }
+.main-column, .side-column { display: grid; gap: 22px; align-content: start; }
+.skill-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.skill-card { display: grid; gap: 14px; padding: 20px; border-radius: 18px; border: 1px solid #d9efe3; background: linear-gradient(180deg, #ffffff 0%, #f1fbf6 100%); }
+.skill-card.alerta { border-color: #f6ccd0; background: linear-gradient(180deg, #ffffff 0%, #fff4f5 100%); }
+.skill-head { display: flex; gap: 12px; align-items: center; }
+.skill-head strong { font-size: 2.2rem; }
+.skill-card p { color: var(--text-500); line-height: 1.45; }
+.trail-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+.trail-step { display: grid; gap: 10px; padding: 18px; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+.trail-step.current { border-color: rgba(14,168,111,0.42); box-shadow: 0 0 0 4px rgba(14,168,111,0.08); }
+.trail-step.locked { opacity: 0.55; }
+.step-index { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: #eafaf3; color: var(--mint-600); font-weight: 800; }
+.trail-step p, .trail-step span { color: var(--text-500); font-size: 0.92rem; }
+.mentor-card { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 16px; align-items: center; }
+.mentor-robot { width: 72px; height: 72px; border-radius: 24px; display: grid; place-items: center; background: linear-gradient(135deg, #e9e6ff, #dcfff2); color: #6f57f3; font-weight: 900; }
+.next-mission { display: grid; gap: 14px; }
+.next-mission p { color: var(--text-500); }
+.mission-meta { display: flex; justify-content: space-between; color: var(--text-500); font-size: 0.9rem; font-weight: 700; }
+@media (max-width: 1280px) { .stats-grid, .skill-grid, .trail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 980px) { .content-grid, .stats-grid, .skill-grid, .trail-grid { grid-template-columns: 1fr; } }

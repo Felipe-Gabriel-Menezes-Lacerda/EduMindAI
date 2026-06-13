@@ -1,0 +1,7 @@
+<div class="shell">
+  <app-sidebar [items]="items" [activeKey]="activeKey" [tone]="sidebarTone" [footerTitle]="footerTitle" [footerSubtitle]="footerSubtitle" [footerNote]="footerNote" [footerIcon]="footerIcon"></app-sidebar>
+  <div class="shell-main">
+    <app-topbar [tone]="topbarTone" [userName]="userName" [userRole]="userRole" [initials]="initials" [showMenu]="showMenu"></app-topbar>
+    <main class="shell-content"><ng-content></ng-content></main>
+  </div>
+</div>
