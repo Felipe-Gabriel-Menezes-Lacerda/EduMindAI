@@ -1,4 +1,8 @@
 export interface NavItem { key: string; label: string; route: string; icon: string; }
+export interface UsuarioAutenticado { id: string; nome: string; email: string; perfil: 'aluno' | 'professor'; turmaId?: string | null; }
+export interface LoginRequest { email: string; senha: string; perfil: 'aluno' | 'professor'; firebaseIdToken?: string; }
+export interface LoginResponse { token: string; redirectUrl: string; authenticatedWithFirebase: boolean; usuario: UsuarioAutenticado; }
+export interface AuthSession extends LoginResponse {}
 export interface StatCard { titulo: string; valor: string; detalhe: string; icone: string; tonalidade: 'mint' | 'purple' | 'blue' | 'amber'; progresso?: number; }
 export interface SkillCard { titulo: string; percentual: number; status: string; descricao: string; icone: string; tonalidade: 'mint' | 'red' | 'amber' | 'blue'; }
 export interface TrailStep { ordem: number; titulo: string; descricao: string; status: 'concluido' | 'atual' | 'bloqueado'; acao?: string; }

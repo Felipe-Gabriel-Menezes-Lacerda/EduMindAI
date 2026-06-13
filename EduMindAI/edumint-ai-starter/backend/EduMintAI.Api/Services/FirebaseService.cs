@@ -1,5 +1,8 @@
 using System.Collections.Concurrent;
 using System.Text.Json;
+using FirebaseAdmin;
+using FirebaseAdmin.Auth;
+using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Firestore;
 
 namespace EduMintAI.Api.Services;
@@ -9,7 +12,11 @@ public class FirebaseService
     private readonly IConfiguration _configuration;
     private readonly ConcurrentDictionary<string, ConcurrentDictionary<string, string>> _mockCollections = new();
     private readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web);
+    private readonly SemaphoreSlim _initializationLock = new(1, 1);
+
     private FirestoreDb? _db;
+    private FirebaseApp? _app;
+    private FirebaseAuth? _auth;
 
     public FirebaseService(IConfiguration configuration)
     {
@@ -28,31 +35,91 @@ public class FirebaseService
             return;
         }
 
-        var db = GetDb();
+        var db = await GetDbAsync();
         await db.Collection(collection).Document(documentId).SetAsync(data!);
     }
 
-    private FirestoreDb GetDb()
+    public async Task<FirebaseToken> VerifyIdTokenAsync(string idToken)
+    {
+        if (string.IsNullOrWhiteSpace(idToken))
+        {
+            throw new InvalidOperationException("O token do Firebase nao foi informado.");
+        }
+
+        await EnsureFirebaseInitializedAsync();
+        return await _auth!.VerifyIdTokenAsync(idToken);
+    }
+
+    private async Task<FirestoreDb> GetDbAsync()
     {
         if (_db is not null)
         {
             return _db;
         }
 
-        var projectId = _configuration["Firebase:ProjectId"];
-        var credentialPath = _configuration["Firebase:CredentialPath"];
+        await EnsureFirebaseInitializedAsync();
+        _db = FirestoreDb.Create(GetProjectId());
+        return _db;
+    }
 
+    private async Task EnsureFirebaseInitializedAsync()
+    {
+        if (_app is not null)
+        {
+            return;
+        }
+
+        await _initializationLock.WaitAsync();
+        try
+        {
+            if (_app is not null)
+            {
+                return;
+            }
+
+            var projectId = GetProjectId();
+            var credential = await LoadCredentialAsync();
+
+            _app = FirebaseApp.Create(new AppOptions
+            {
+                Credential = credential,
+                ProjectId = projectId
+            }, $"edumint-ai-{projectId}");
+
+            _auth = FirebaseAuth.GetAuth(_app);
+        }
+        finally
+        {
+            _initializationLock.Release();
+        }
+    }
+
+    private string GetProjectId()
+    {
+        var projectId = _configuration["Firebase:ProjectId"];
         if (string.IsNullOrWhiteSpace(projectId))
         {
-            throw new InvalidOperationException("Firebase:ProjectId não configurado.");
+            throw new InvalidOperationException("Firebase:ProjectId nao configurado.");
         }
 
-        if (!string.IsNullOrWhiteSpace(credentialPath))
+        return projectId;
+    }
+
+    private async Task<GoogleCredential> LoadCredentialAsync()
+    {
+        var credentialPath = _configuration["Firebase:CredentialPath"];
+        if (string.IsNullOrWhiteSpace(credentialPath))
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", credentialPath);
+            return await GoogleCredential.GetApplicationDefaultAsync();
         }
 
-        _db = FirestoreDb.Create(projectId);
-        return _db;
+        var fullPath = Path.GetFullPath(credentialPath);
+        if (!File.Exists(fullPath))
+        {
+            throw new FileNotFoundException("Arquivo de credenciais do Firebase nao encontrado.", fullPath);
+        }
+
+        Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", fullPath);
+        return GoogleCredential.FromFile(fullPath);
     }
 }

@@ -17,6 +17,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSingleton<FirebaseService>();
 builder.Services.AddSingleton<SeedDataService>();
+builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<DiagnosticoService>();
 builder.Services.AddScoped<TrilhaService>();
 builder.Services.AddScoped<DashboardService>();

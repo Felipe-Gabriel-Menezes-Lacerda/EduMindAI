@@ -43,15 +43,15 @@
     </div>
 
     <section class="login-card surface">
-      <div class="login-avatar">AC</div>
+      <div class="login-avatar">{{ perfil === 'aluno' ? 'AL' : 'PR' }}</div>
       <div class="login-heading">
         <h2>Acesse sua conta</h2>
         <p>Entre para continuar sua jornada</p>
       </div>
 
       <div class="perfil-switch">
-        <button type="button" [class.active]="perfil === 'aluno'" (click)="perfil = 'aluno'">Aluno</button>
-        <button type="button" [class.active]="perfil === 'professor'" (click)="perfil = 'professor'">Professor</button>
+        <button type="button" [class.active]="perfil === 'aluno'" (click)="definirPerfil('aluno')">Aluno</button>
+        <button type="button" [class.active]="perfil === 'professor'" (click)="definirPerfil('professor')">Professor</button>
       </div>
 
       <div class="form-field">
@@ -64,10 +64,17 @@
         <input id="senha" class="form-control" [(ngModel)]="senha" type="password" placeholder="••••••••" />
       </div>
 
+      <p class="demo-hint">
+        Demo aluno: <strong>ana&#64;email.com</strong> |
+        Demo professor: <strong>prof&#64;edumint.ai</strong> |
+        Senha: <strong>123456</strong>
+      </p>
+
+      <p class="error-message" *ngIf="erro">{{ erro }}</p>
       <a class="forgot" href="javascript:void(0)">Esqueceu sua senha?</a>
-      <button type="button" class="btn-primary" (click)="entrar()">Entrar</button>
+      <button type="button" class="btn-primary" [disabled]="carregando" (click)="entrar()">{{ carregando ? 'Entrando...' : 'Entrar' }}</button>
       <div class="separator"><span>ou</span></div>
-      <button type="button" class="btn-secondary" (click)="iniciarDiagnostico()">Começar diagnóstico</button>
+      <button type="button" class="btn-secondary" [disabled]="carregando" (click)="iniciarDiagnostico()">Começar diagnóstico</button>
 
       <p class="terms">Ao continuar, você concorda com nossos <a class="link-inline" href="javascript:void(0)">Termos de Uso</a> e <a class="link-inline" href="javascript:void(0)">Política de Privacidade</a>.</p>
     </section>
