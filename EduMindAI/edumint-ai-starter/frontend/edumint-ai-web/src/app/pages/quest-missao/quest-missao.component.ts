@@ -19,11 +19,11 @@ export class QuestMissaoComponent implements OnInit {
     { key: 'inicio', label: 'Início', route: '/aluno/dashboard', icon: 'IN' },
     { key: 'trilhas', label: 'Trilhas', route: '/aluno/trilha', icon: 'TR' },
     { key: 'quest', label: 'EduMint Quest', route: '/aluno/quest/missao', icon: 'EQ' },
-    { key: 'relatorios', label: 'Relatórios', route: '/aluno/dashboard', icon: 'RL' },
-    { key: 'conquistas', label: 'Conquistas', route: '/aluno/quest/missao', icon: 'CQ' },
-    { key: 'biblioteca', label: 'Biblioteca', route: '/aluno/dashboard', icon: 'BB' },
-    { key: 'tutor', label: 'IA Tutor', route: '/aluno/dashboard', icon: 'AI' },
-    { key: 'desafios', label: 'Desafios diários', route: '/aluno/quest/missao', icon: 'DD' }
+    { key: 'relatorios', label: 'Relatórios', route: '/aluno/relatorios', icon: 'RL' },
+    { key: 'conquistas', label: 'Conquistas', route: '/aluno/conquistas', icon: 'CQ' },
+    { key: 'biblioteca', label: 'Biblioteca', route: '/aluno/biblioteca', icon: 'BB' },
+    { key: 'tutor', label: 'IA Tutor', route: '/aluno/tutor', icon: 'AI' },
+    { key: 'desafios', label: 'Desafios diários', route: '/aluno/desafios', icon: 'DD' }
   ];
 
   missao: MissaoAluno = missaoAlunoMock;
